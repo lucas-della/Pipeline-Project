@@ -9,7 +9,7 @@ st.set_page_config(page_title="KPIs Pagamentos", layout="wide")
 # ---------- Leitura de dados ----------
 @st.cache_data
 def load_kpis(path: str):
-    df = pd.read_csv(path)
+    df = pd.read_parquet(path)
 
     # Normaliza nomes possivelmente diferentes
     candidates_date = [c for c in df.columns if c.lower() in ("day","date","transaction_date")]
@@ -42,9 +42,10 @@ def load_kpis(path: str):
 
     return df
 
-data_path = Path("/app/data/gold/kpis_gold.csv")
+data_file = "kpis.parquet"
+data_path = Path(f"/app/data/gold/{data_file}")
 if not data_path.exists():
-    st.error("Arquivo data/kpis_gold.csv não encontrado. Gere o kpis_gold.csv na Parte 3.")
+    st.error(f"Arquivo {data_path} não encontrado. Gere o kpis_gold.csv na Parte 3.")
     st.stop()
 
 df = load_kpis(str(data_path))
