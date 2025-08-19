@@ -1,2 +1,5 @@
-./airflow/logs/*
+# Logs do Airflow
+airflow/logs/*
+
+# Cache do Python
 __pycache__/

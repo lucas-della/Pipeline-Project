@@ -2105,3 +2105,17 @@
 [2025-08-19T02:36:45.341+0000] {logging_mixin.py:188} INFO - [2025-08-19T02:36:45.341+0000] {dag.py:3089} INFO - Sync 1 DAGs
 [2025-08-19T02:36:45.351+0000] {logging_mixin.py:188} INFO - [2025-08-19T02:36:45.351+0000] {dag.py:3947} INFO - Setting next_dagrun for make_kpis_csv to None, run_after=None
 [2025-08-19T02:36:45.370+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/make_kpis_csv.py took 0.580 seconds
+[2025-08-19T02:37:15.597+0000] {processor.py:161} INFO - Started process (PID=5295) to work on /opt/airflow/dags/make_kpis_csv.py
+[2025-08-19T02:37:15.598+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/make_kpis_csv.py for tasks to queue
+[2025-08-19T02:37:15.599+0000] {logging_mixin.py:188} INFO - [2025-08-19T02:37:15.599+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/make_kpis_csv.py
+[2025-08-19T02:37:16.143+0000] {processor.py:840} INFO - DAG(s) 'make_kpis_csv' retrieved from /opt/airflow/dags/make_kpis_csv.py
+[2025-08-19T02:37:16.177+0000] {logging_mixin.py:188} INFO - [2025-08-19T02:37:16.176+0000] {dag.py:3089} INFO - Sync 1 DAGs
+[2025-08-19T02:37:16.189+0000] {logging_mixin.py:188} INFO - [2025-08-19T02:37:16.189+0000] {dag.py:3947} INFO - Setting next_dagrun for make_kpis_csv to None, run_after=None
+[2025-08-19T02:37:16.209+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/make_kpis_csv.py took 0.619 seconds
+[2025-08-19T02:37:46.537+0000] {processor.py:161} INFO - Started process (PID=5301) to work on /opt/airflow/dags/make_kpis_csv.py
+[2025-08-19T02:37:46.538+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/make_kpis_csv.py for tasks to queue
+[2025-08-19T02:37:46.540+0000] {logging_mixin.py:188} INFO - [2025-08-19T02:37:46.539+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/make_kpis_csv.py
+[2025-08-19T02:37:46.981+0000] {processor.py:840} INFO - DAG(s) 'make_kpis_csv' retrieved from /opt/airflow/dags/make_kpis_csv.py
+[2025-08-19T02:37:47.006+0000] {logging_mixin.py:188} INFO - [2025-08-19T02:37:47.005+0000] {dag.py:3089} INFO - Sync 1 DAGs
+[2025-08-19T02:37:47.015+0000] {logging_mixin.py:188} INFO - [2025-08-19T02:37:47.015+0000] {dag.py:3947} INFO - Setting next_dagrun for make_kpis_csv to None, run_after=None
+[2025-08-19T02:37:47.041+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/make_kpis_csv.py took 0.511 seconds
