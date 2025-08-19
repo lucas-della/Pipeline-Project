@@ -1,0 +1,78 @@
+version: "3.9"
+
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.9.3
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+    # cria usuário admin na etapa airflow-init
+    _AIRFLOW_WWW_USER_USERNAME: admin
+    _AIRFLOW_WWW_USER_PASSWORD: admin
+  volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./airflow/logs:/opt/airflow/logs
+    - ./airflow/plugins:/opt/airflow/plugins
+  user: "${AIRFLOW_UID:-50000}:0"
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: airflow-postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow -d airflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  airflow-init:
+    <<: *airflow-common
+    container_name: airflow-init
+    entrypoint: /bin/bash
+    command: ["-lc", "set -e; airflow db migrate && airflow users create --username admin --firstname Lucas --lastname Alves --role Admin --email admin@example.com --password admin"]
+    restart: "no"
+
+  airflow-webserver:
+    <<: *airflow-common
+    container_name: airflow-webserver
+    command: webserver
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  airflow-scheduler:
+    <<: *airflow-common
+    container_name: airflow-scheduler
+    command: scheduler
+    restart: unless-stopped
+
+  streamlit:
+    build:
+      context: ./streamlit
+    container_name: kpis-streamlit
+    environment:
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - ./data:/app/data:rw
+      - ./streamlit/app.py:/app/app.py
+      - ./streamlit/requirements.txt:/app/requirements.txt
+    ports:
+      - "8501:8501"
+    command: >
+      bash -lc "streamlit run app.py --server.port 8501 --server.address 0.0.0.0"
+    depends_on:
+      - airflow-webserver
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
